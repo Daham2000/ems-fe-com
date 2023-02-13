@@ -1,3 +1,13 @@
+@font-face {
+  font-family: Inter;
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap");
+}
+
+@font-face {
+  font-family: InterBold;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +45,69 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-color-white {
+  background-color: white;
+}
+
+.topic-font {
+  font-family: 'Inter', sans-serif;
+}
+
+.sub-topic-font {
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.topic-color {
+  color: #002648;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex-row {
+  flex-direction: row;
+}
+
+.d-flex-column {
+  flex-direction: column;
+}
+
+.align-item-center {
+  align-items: center;
+  align-content: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-start {
+  justify-content: start;
+}
+
+.justify-content-end {
+  justify-items: end;
+  justify-content: end;
+}
+
+.align-item-end {
+  align-items: end;
+}
+
+.color-white {
+  color: white;
+}
+
+.button-color {
+  background-color: #2C475F;
+}
+
+.button-blue-dark {
+  border: none;
+  border-radius: '50px';
 }
