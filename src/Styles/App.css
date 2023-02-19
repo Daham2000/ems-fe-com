@@ -97,8 +97,16 @@
   align-content: end;
 }
 
+.align-item-between {
+  align-content: space-between;
+}
+
 .justify-content-center {
   justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }
 
 .justify-content-start {
@@ -138,4 +146,17 @@
 .button-blue-dark {
   border: none;
   border-radius: '50px';
+}
+
+.circle-div {
+  border-radius: 50%;
+}
+
+.birthday-wish-msg {
+  background-color: #ffdafb;
+  opacity: 13px;
+  color: #FF01E6;
+  font-size: 13px;
+  border-radius: 10px;
+  padding-left: 10px;
 }
