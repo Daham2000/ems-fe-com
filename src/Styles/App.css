@@ -51,6 +51,10 @@
   background-color: white;
 }
 
+.bg-color-grey {
+  background-color: #F1F3F7;
+}
+
 .topic-font {
   font-family: 'Inter', sans-serif;
 }
@@ -80,6 +84,16 @@
 .align-item-center {
   align-items: center;
   align-content: center;
+}
+
+.align-item-start{
+  align-items: start;
+  align-content: start;
+}
+
+.align-item-end {
+  align-items: end;
+  align-content: end;
 }
 
 .justify-content-center {
