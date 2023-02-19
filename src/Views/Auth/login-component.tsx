@@ -29,7 +29,7 @@ const LoginComponent = () => {
                     />
                     <div className="d-flex d-flex-column align-item-end" style={{ width: "100%", paddingTop: "15px" }}>
                         <ButtonComponent text="Login" onClick={() => {
-                            navigate("/login");
+                            navigate("/dashboard-admin");
                         }} />
                     </div>
                 </div>

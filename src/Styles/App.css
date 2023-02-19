@@ -122,6 +122,19 @@
   background-color: #2C475F;
 }
 
+.slider-text-color {
+  color: #2C475F;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.slider-text-color-gray {
+  color: gray;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
 .button-blue-dark {
   border: none;
   border-radius: '50px';
