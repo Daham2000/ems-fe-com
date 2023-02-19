@@ -42,6 +42,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -49,6 +50,10 @@
 
 .bg-color-white {
   background-color: white;
+}
+
+.bg-color-grey {
+  background-color: #F1F3F7;
 }
 
 .topic-font {
@@ -80,6 +85,16 @@
 .align-item-center {
   align-items: center;
   align-content: center;
+}
+
+.align-item-start {
+  align-items: start;
+  align-content: start;
+}
+
+.align-item-end {
+  align-items: end;
+  align-content: end;
 }
 
 .justify-content-center {
