@@ -20,7 +20,9 @@ const OpeningView = () => {
             <div className="d-flex d-flex-row justify-content-center align-item-center">
                 <SubTextComponent text="Or you can create an organization for free" />
                 <div style={{ padding: "10px" }}>
-                    <ButtonComponent text="Register" />
+                    <ButtonComponent text="Register" onClick={() => {
+                         navigate("/signup");
+                    }}/>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ const LoginComponent = () => {
         <div className="bg-color-grey d-flex d-flex-column justify-content-start align-item-center" style={{ height: '100vh', paddingTop: "55px" }}>
             <h5 className="topic-font topic-color font-size-50" style={{ fontSize: '38px', marginBottom: '25px' }}>Welcome to the EMS system</h5>
 
-            <WhiteCurvedBox>
+            <WhiteCurvedBox height="340px">
                 <div className="d-flex d-flex-column align-item-start" style={{ padding: "15px" }}>
                     <SubTextComponent text="Login" />
                     <Form.Label htmlFor="userName" style={{ marginTop: "10px" }}>User Name</Form.Label>
