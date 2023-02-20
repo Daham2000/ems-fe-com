@@ -160,3 +160,26 @@
   border-radius: 10px;
   padding-left: 10px;
 }
+
+.gray-white-box {
+  background-color: #545f68;
+  color: white;
+  font-size: 11px;
+}
+
+.box-white-bold {
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  padding-top: 8px;
+}
+
+.box-white-normal {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 100;
+  text-align: left;
+  color: white;
+  padding-top: 8px;
+}
