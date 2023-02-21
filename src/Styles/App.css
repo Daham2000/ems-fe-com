@@ -183,3 +183,31 @@
   color: white;
   padding-top: 8px;
 }
+
+.holiday-card-left {
+  width: 5px;
+  border-radius: 20px;
+}
+
+.black-bold-h2 {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.holiday-card-remaining {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  color: #2AA846;
+  margin-top: 5px;
+}
+
+.holiday-card-date {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: 300;
+  margin-top: 5px;
+  font-style: italic;
+}

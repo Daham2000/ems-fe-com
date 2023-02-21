@@ -5,6 +5,7 @@ import { WhiteButtonComponent } from "../Shared/button-component";
 import WrapTextComponent from "../Shared/wrap-text-component";
 import DotIcon from "../../assets/dot-icon.svg";
 import DotIconRed from "../../assets/dot-red.svg";
+import HolidayCard from "../Shared/holiday-card";
 
 const AdminDashboardComponent = () => {
     return <div className="d-flex d-flex-row bg-color-grey" style={{ height: "100vh" }}>
@@ -33,12 +34,12 @@ const AdminDashboardComponent = () => {
                 width: "84vw", height: "200px", borderRadius: "6px"
             }}>
                 <div className="d-flex d-flex-row">
-                    <WrapTextComponent text={" 5 Unread Announcements"} icon={DotIcon} />
+                    <WrapTextComponent text={"  5 Unread Announcements"} icon={DotIcon} />
                 </div>
 
                 <div className="d-flex d-flex-row justify-content-between">
                     <div className="box-white-bold">{"Short survey for this month team gathering"}</div>
-                    <WrapTextComponent text={" Announcement"} icon={BoxImportantIcon} />
+                    <WrapTextComponent text={"  Announcement"} icon={BoxImportantIcon} />
                 </div>
 
                 <p className="box-white-normal" style={{ marginBottom: "1px" }}>It has survived not only five centuries, but also the leap into electronic
@@ -61,7 +62,24 @@ const AdminDashboardComponent = () => {
                 padding: "15px",
                 borderRadius: "10px", height: "250px"
             }}>
-                <img src={DotIconRed} height={"10px"} style={{ color: "Red" }} />
+                <div style={{ height: "20px", fontWeight: "bold", fontSize: "13px" }}>
+                    <img src={DotIconRed} height={"10px"} style={{ color: "Red", marginRight: "10px" }} />
+                    {"Special Holidays"}
+                </div>
+                <div className="d-flex d-flex-column" style={{ marginTop: "10px" }}>
+                    <HolidayCard color={"#4E84C1"}
+                        date={"29th January , Monday "}
+                        holiday={"Duruthu Full moon Poya day"}
+                        remaining={"2 days more"} />
+                    <HolidayCard color={"#B650E6"}
+                        date={"29th January , Monday "}
+                        holiday={"Duruthu Full moon Poya day"}
+                        remaining={"2 days more"} />
+                    <HolidayCard color={"#2AA846"}
+                        date={"29th January , Monday "}
+                        holiday={"Duruthu Full moon Poya day"}
+                        remaining={"2 days more"} />
+                </div>
             </div>
         </div>
     </div>;
