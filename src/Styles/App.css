@@ -97,8 +97,16 @@
   align-content: end;
 }
 
+.align-item-between {
+  align-content: space-between;
+}
+
 .justify-content-center {
   justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }
 
 .justify-content-start {
@@ -122,7 +130,84 @@
   background-color: #2C475F;
 }
 
+.slider-text-color {
+  color: #2C475F;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.slider-text-color-gray {
+  color: gray;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
 .button-blue-dark {
   border: none;
   border-radius: '50px';
+}
+
+.circle-div {
+  border-radius: 50%;
+}
+
+.birthday-wish-msg {
+  background-color: #ffdafb;
+  opacity: 13px;
+  color: #FF01E6;
+  font-size: 13px;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.gray-white-box {
+  background-color: #545f68;
+  color: white;
+  font-size: 11px;
+}
+
+.box-white-bold {
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  padding-top: 8px;
+}
+
+.box-white-normal {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 100;
+  text-align: left;
+  color: white;
+  padding-top: 8px;
+}
+
+.holiday-card-left {
+  width: 5px;
+  border-radius: 20px;
+}
+
+.black-bold-h2 {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.holiday-card-remaining {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  color: #2AA846;
+  margin-top: 5px;
+}
+
+.holiday-card-date {
+  font-size: 12px;
+  font-family: 'InterBold', sans-serif;
+  font-weight: 300;
+  margin-top: 5px;
+  font-style: italic;
 }
