@@ -6,7 +6,7 @@ const DashboardBtn = (props: any) => {
             marginRight: "5px",
             padding: "5px",
             cursor: "pointer"
-        }} onClick={() => { }}>{props.title}</div>;
+        }} onClick={() => {props.onClick()}}>{props.title}</div>;
 };
 
 export default DashboardBtn;

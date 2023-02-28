@@ -103,6 +103,7 @@
 
 .justify-content-center {
   justify-content: center;
+  justify-items: center;
 }
 
 .justify-content-between {
@@ -111,6 +112,7 @@
 
 .justify-content-start {
   justify-content: start;
+  justify-items: start;
 }
 
 .justify-content-end {
@@ -210,4 +212,17 @@
   font-weight: 300;
   margin-top: 5px;
   font-style: italic;
+}
+
+.skill-card {
+  background-color: #c2deff;
+  color: #4E84C1;
+  border-radius: 15px;
+  width: auto;
+  font-size: 10px;
+  font-weight: 400;
+  margin-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 5px;
 }
