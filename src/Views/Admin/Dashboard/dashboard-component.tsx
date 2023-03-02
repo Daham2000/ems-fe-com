@@ -1,6 +1,6 @@
 import DashboardBtn from "../../Shared/dashboard-btn";
 import { Routes, Route } from "react-router-dom";
-import DashboardView from "./dashboard-view"; 
+import DashboardView from "./dashboard-view";
 import { useState } from "react";
 import ManageEmployeeComponent from "../ManageEmployeeComponent/manage-emp-component";
 import { useNavigate } from 'react-router-dom';
