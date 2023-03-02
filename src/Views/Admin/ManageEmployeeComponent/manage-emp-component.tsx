@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import EditEmployeeComponent from "./EditEmployeeComponent";
 
 function MyVerticallyCenteredModal(props: any) {
     const today = new Date();
@@ -153,6 +154,7 @@ function MyVerticallyCenteredModal(props: any) {
 
 const ManageEmployeeComponent = () => {
     const [showDialog, setShowDialog] = useState(false);
+    const [openedEmployee, setOpenedEmployee] = useState(false);
 
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
@@ -160,26 +162,81 @@ const ManageEmployeeComponent = () => {
             profileUrl="https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg"
             wish={1} />
         <div className="sub-topic-font " style={{ marginTop: "15px" }}>{"Manage Employees"}</div>
-        <div className="d-flex flex-row justify-content-start align-item-start" style={{ marginTop: "10px" }}>
-            <Form.Control
-                type="text"
-                style={{ height: '30px', marginRight: "4px" }}
-                id="userName"
-                aria-describedby="passwordHelpBlock"
-            />
-            <button onClick={() => { }} className="topic-font bg-color-white"
-                style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
-            <ButtonComponent text="Add Employee" onClick={() => {
-                setShowDialog(true);
-            }} />
-        </div>
-        <div className="d-flex flex-column" style={{ marginTop: "10px" }}>
-            <EmployeeCard />
-            <EmployeeCard />
-            <EmployeeCard />
-            <EmployeeCard />
-            <EmployeeCard />
-        </div>
+        {
+            !openedEmployee ? <>
+                <div className="d-flex flex-row justify-content-start align-item-start" style={{ marginTop: "10px" }}>
+                    <Form.Control
+                        type="text"
+                        style={{ height: '30px', marginRight: "4px" }}
+                        id="userName"
+                        aria-describedby="passwordHelpBlock"
+                    />
+                    <button onClick={() => { }} className="topic-font bg-color-white"
+                        style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
+                    <ButtonComponent text="Add Employee" onClick={() => {
+                        setShowDialog(true);
+                    }} />
+                </div>
+                <div className="d-flex flex-column" style={{ marginTop: "10px" }}>
+                    <EmployeeCard onClick={() => {
+                        setOpenedEmployee(true);
+                    }} />
+                    <EmployeeCard onClick={() => {
+                        setOpenedEmployee(true);
+                    }} />
+                    <EmployeeCard onClick={() => {
+                        setOpenedEmployee(true);
+                    }} />
+                    <EmployeeCard onClick={() => {
+                        setOpenedEmployee(true);
+                    }} />
+                    <EmployeeCard onClick={() => {
+                        setOpenedEmployee(true);
+                    }} />
+                </div>
+            </> : <div className="d-flex flex-row">
+                <div className="d-flex flex-column" style={{ marginTop: "18px", marginRight: "20px" }}>
+                    <div className="d-flex flex-column bg-color-white justify-content-between"
+                        style={{ borderRadius: "10px", width: "auto", paddingLeft: "10px", paddingRight: "10px", paddingTop: "10px" }}>
+                        <div className="d-flex flex-row justify-content-between" style={{ width: "400px" }}>
+                            <div className="d-flex flex-column justify-content-start align-item-start"
+                                style={{ marginRight: "30px", marginBottom: "15px" }} >
+                                <div className="sub-topic-font-two">{"Performance Reports"}</div>
+                                <div style={{ color: "black", marginTop: "1px", fontSize: "10px" }}>{"All Reports"}</div>
+                            </div>
+                            <ButtonComponent text="Add Performance report" onClick={() => {
+                                setShowDialog(true);
+                            }} />
+                        </div>
+                        <div className="d-flex flex-column" style={{ marginTop: "2px", marginBottom: "5px" }}>
+                            <div className="d-flex flex-row justify-content-between align-item-center" style={{
+                                width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
+                                borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
+                            }}>
+                                <div className="fontStyleReportCardLeft">January Report</div>
+                                <div className="fontStyleReportCardRight">2023 Jan 31</div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between align-item-center" style={{
+                                width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
+                                borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
+                            }}>
+                                <div className="fontStyleReportCardLeft">January Report</div>
+                                <div className="fontStyleReportCardRight">2023 Jan 31</div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-between align-item-center" style={{
+                                width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
+                                borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
+                            }}>
+                                <div className="fontStyleReportCardLeft">January Report</div>
+                                <div className="fontStyleReportCardRight">2023 Jan 31</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <EditEmployeeComponent style={{ marginTop: "28px" }} />
+
+            </div>
+        }
 
         <MyVerticallyCenteredModal
             show={showDialog}

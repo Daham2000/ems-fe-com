@@ -1,7 +1,9 @@
 import StarIcon from "../../../assets/starIcon.svg";
 
-const EmployeeCard = () => {
-    return     <div className="d-flex flex-row bg-color-white align-item-center justify-content-center" style={{
+const EmployeeCard = (props: any) => {
+    return <div onClick={() => {
+        props.onClick()
+    }} className="d-flex flex-row bg-color-white align-item-center justify-content-center" style={{
         width: "auto",
         borderRadius: "12px",
         marginTop: "10px",
@@ -28,11 +30,11 @@ const EmployeeCard = () => {
         </div>
         <div className="d-flex flex-column align-item-start" style={{ width: "150px", marginLeft: "20px", marginRight: "10px" }}>
             <div style={{ fontSize: "12px", color: "#808080", fontWeight: "600" }}>{"Skills"}</div>
-            <div className="d-flex flex-row" style={{width: "200px"}}>
+            <div className="d-flex flex-row" style={{ width: "200px" }}>
                 <div className="skill-card">Management</div>
                 <div className="skill-card">Management</div>
             </div>
-            <div className="d-flex flex-row" style={{width: "200px"}}>
+            <div className="d-flex flex-row" style={{ width: "200px" }}>
                 <div className="skill-card">Management</div>
                 <div className="skill-card">Management</div>
             </div>

@@ -66,6 +66,13 @@
   font-size: 15px;
 }
 
+.sub-topic-font-two {
+  font-family: 'InterBold', sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  text-align: start;
+}
+
 .topic-color {
   color: #002648;
 }
@@ -234,4 +241,22 @@
   padding: 1rem;
   border-radius: 5px;
   background-color: lightblue;
+}
+
+.fontStyleReportCardLeft {
+  font-size: 11px;
+  color: gray;
+}
+
+.fontStyleReportCardRight {
+  font-size: 11px;
+  color: #2AA846;
+}
+
+.grid-layout {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  padding: 10px;
+  row-gap: 2px;
+  column-gap: 10px;
 }
