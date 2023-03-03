@@ -4,6 +4,7 @@ import DashboardView from "./dashboard-view";
 import { useState } from "react";
 import ManageEmployeeComponent from "../ManageEmployeeComponent/manage-emp-component";
 import { useNavigate } from 'react-router-dom';
+import AnnouncementCompo from "../AnnouncementComponent/AnnouncementCompo";
 
 const AdminDashboardComponent = () => {
 
@@ -46,7 +47,7 @@ const AdminDashboardComponent = () => {
                 <Route path={"/"} element={<DashboardView />} />
                 <Route path={`profile`} element={<DashboardView />} />
                 <Route path='/manage-emoloyee' element={<ManageEmployeeComponent />} />
-                <Route path='/announcements' element={<DashboardView />} />
+                <Route path='/announcements' element={<AnnouncementCompo />} />
                 <Route path='/help' element={<DashboardView />} />
                 <Route path='/settings' element={<DashboardView />} />
             </Routes>

@@ -260,3 +260,21 @@
   row-gap: 2px;
   column-gap: 10px;
 }
+
+.announcement-title-normal {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  color: black;
+  padding-top: 5px;
+}
+
+.announcement-des-normal {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 100;
+  text-align: left;
+  color: #565656;
+  padding-top: 5px;
+}
