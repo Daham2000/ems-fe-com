@@ -1,7 +1,5 @@
 import { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import DatePicker from "react-datepicker";
 import { Form } from "react-bootstrap";
 import ButtonComponent, { WhiteButtonComponent } from "../../Shared/button-component";
 
@@ -19,7 +17,7 @@ function AddPerformanceModel(props: any) {
         >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {"Create Performance Reports"}
+                    {props.isEdit ? "Edit Performance Report" :"Create Performance Report"}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

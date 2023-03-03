@@ -51,6 +51,7 @@ const data = {
 const ManageEmployeeComponent = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [showAddPerformanceModel, setShowAddPerformanceModel] = useState(false);
+    const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     const [openedEmployee, setOpenedEmployee] = useState(false);
 
     ChartJS.register(
@@ -179,7 +180,10 @@ const ManageEmployeeComponent = () => {
                                 <div className="fontStyleReportCardLeft">January Report</div>
                                 <div className="fontStyleReportCardRight">2023 Jan 31</div>
                             </div>
-                            <div className="d-flex flex-row justify-content-between align-item-center" style={{
+                            <div onClick={() => {
+                                setShowEditPerformanceModel(true);
+                                setShowAddPerformanceModel(true);
+                            }} className="d-flex flex-row justify-content-between align-item-center" style={{
                                 width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
                                 borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
                             }}>
@@ -200,7 +204,8 @@ const ManageEmployeeComponent = () => {
 
         <AddPerformanceModel
             show={showAddPerformanceModel}
-            onHide={() => setShowAddPerformanceModel(false)}
+            isEdit={showEditPerformanceModel}
+            onHide={() => { setShowAddPerformanceModel(false); setShowEditPerformanceModel(false) }}
         />
     </div>;
 };
