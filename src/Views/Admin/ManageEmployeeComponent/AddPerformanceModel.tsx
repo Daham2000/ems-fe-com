@@ -4,10 +4,6 @@ import { Form } from "react-bootstrap";
 import ButtonComponent, { WhiteButtonComponent } from "../../Shared/button-component";
 
 function AddPerformanceModel(props: any) {
-    const today = new Date();
-    const [joinedDate, setJoinedDate] = useState(new Date());
-    const [birthDay, setBirthDay] = useState(new Date());
-
     return (
         <Modal
             {...props}

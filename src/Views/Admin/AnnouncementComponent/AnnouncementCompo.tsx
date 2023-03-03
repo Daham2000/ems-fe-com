@@ -2,8 +2,12 @@ import DashboardTopBar from "../../Shared/dashboard-top-bar";
 import { Form } from "react-bootstrap";
 import ButtonComponent from "../../Shared/button-component";
 import AnnoucementCard from "./AnnouncementCard";
+import AddAnnouncementModel from "./AddAnnouncementModel";
+import { useState } from "react";
 
 const AnnouncementCompo = () => {
+    const [showDialog, setShowDialog] = useState(false);
+
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
             isBirthday={false}
@@ -21,15 +25,21 @@ const AnnouncementCompo = () => {
             <button onClick={() => { }} className="topic-font bg-color-white"
                 style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
             <ButtonComponent width={"138px"} text="Create Announcement" onClick={() => {
+                setShowDialog(true);
             }} />
         </div>
 
         <div className="d-flex flex-column justify-content-start align-item-start">
             <div style={{ height: "10px" }} />
-                <AnnoucementCard/>
-                <AnnoucementCard/>
-                <AnnoucementCard/>
+            <AnnoucementCard />
+            <AnnoucementCard />
+            <AnnoucementCard />
         </div>
+
+        <AddAnnouncementModel
+            show={showDialog}
+            onHide={() => setShowDialog(false)}
+        />
     </div>;
 }
 
