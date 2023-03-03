@@ -261,6 +261,14 @@
   column-gap: 10px;
 }
 
+.grid-four {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto;
+  padding: 10px;
+  row-gap: 15px;
+  column-gap: 20px;
+}
+
 .announcement-title-normal {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
