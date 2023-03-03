@@ -5,6 +5,7 @@ import { useState } from "react";
 import ManageEmployeeComponent from "../ManageEmployeeComponent/manage-emp-component";
 import { useNavigate } from 'react-router-dom';
 import AnnouncementCompo from "../AnnouncementComponent/AnnouncementCompo";
+import MyProfileView from "../../ProfileComponent/MyProfileView";
 
 const AdminDashboardComponent = () => {
 
@@ -45,7 +46,7 @@ const AdminDashboardComponent = () => {
         <div style={{ padding: "10px", marginLeft: "10px", width: "82vw" }} >
             <Routes>
                 <Route path={"/"} element={<DashboardView />} />
-                <Route path={`profile`} element={<DashboardView />} />
+                <Route path={`/profile`} element={<MyProfileView />} />
                 <Route path='/manage-emoloyee' element={<ManageEmployeeComponent />} />
                 <Route path='/announcements' element={<AnnouncementCompo />} />
                 <Route path='/help' element={<DashboardView />} />
