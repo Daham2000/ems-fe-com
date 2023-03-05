@@ -6,6 +6,7 @@ import ManageEmployeeComponent from "../ManageEmployeeComponent/manage-emp-compo
 import { useNavigate } from 'react-router-dom';
 import AnnouncementCompo from "../AnnouncementComponent/AnnouncementCompo";
 import MyProfileView from "../../ProfileComponent/MyProfileView";
+import MotivationView from "../../MotivationView/MotivationView";
 
 const AdminDashboardComponent = () => {
 
@@ -35,7 +36,7 @@ const AdminDashboardComponent = () => {
                 <DashboardBtn isClicked={currentPage === "help"} onClick={() => {
                     setCurrentPage("help");
                     navigate("/dashboard-admin/help");
-                }} title="Help Center" />
+                }} title="Motivation Page" />
                 <DashboardBtn isClicked={currentPage === "settings"} onClick={() => {
                     setCurrentPage("settings");
                     navigate("/dashboard-admin/settings");
@@ -49,7 +50,7 @@ const AdminDashboardComponent = () => {
                 <Route path={`/profile`} element={<MyProfileView />} />
                 <Route path='/manage-emoloyee' element={<ManageEmployeeComponent />} />
                 <Route path='/announcements' element={<AnnouncementCompo />} />
-                <Route path='/help' element={<DashboardView />} />
+                <Route path='/help' element={<MotivationView />} />
                 <Route path='/settings' element={<DashboardView />} />
             </Routes>
         </div>

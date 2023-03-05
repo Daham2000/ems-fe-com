@@ -1,4 +1,3 @@
-import { Form } from "react-bootstrap";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import StarIcon from "../../assets/starIcon.svg";
@@ -14,9 +13,6 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { options } from "../Admin/ManageEmployeeComponent/manage-emp-component";
-import ButtonComponent from "../Shared/button-component";
-import EditEmployeeComponent from "../Admin/ManageEmployeeComponent/EditEmployeeComponent";
 import AddPerformanceModel from "../Admin/ManageEmployeeComponent/AddPerformanceModel";
 import DashboardTopBar from "../Shared/dashboard-top-bar";
 
@@ -43,9 +39,6 @@ const MyProfileView = () => {
             }
         ],
     };
-    const today = new Date();
-    const [joinedDate, setJoinedDate] = useState(new Date());
-    const [birthDay, setBirthDay] = useState(new Date());
     const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     ChartJS.register(
         CategoryScale,
