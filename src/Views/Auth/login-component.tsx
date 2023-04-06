@@ -3,10 +3,21 @@ import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../Shared/button-component";
 import SubTextComponent from "../Shared/sub-text";
 import WhiteCurvedBox from "../Shared/white-curved-box";
+import { useState } from "react";
+import { loginUserService } from "../../Business/AuthService";
 
 const LoginComponent = () => {
 
     const navigate = useNavigate();
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
+    const userLoginEvent = async () => {
+        setIsLoading(true);
+        const idToken = await loginUserService(userName, password);
+        setIsLoading(false);
+    }
 
     return <div>
         <div className="bg-color-grey d-flex d-flex-column justify-content-start align-item-center" style={{ height: '100vh', paddingTop: "55px" }}>
@@ -17,19 +28,27 @@ const LoginComponent = () => {
                     <SubTextComponent text="Login" />
                     <Form.Label htmlFor="userName" style={{ marginTop: "10px" }}>User Name</Form.Label>
                     <Form.Control
-                        type="text"
+                        type="email"
                         id="userName"
+                        value={userName}
+                        onChange={(v) => {
+                            setUserName(v.target.value);
+                        }}
                         aria-describedby="passwordHelpBlock"
                     />
                     <Form.Label htmlFor="fpassword" style={{ marginTop: "20px" }}>Password</Form.Label>
                     <Form.Control
                         type="password"
                         id="fpassword"
+                        value={password}
+                        onChange={(v) => {
+                            setPassword(v.target.value);
+                        }}
                         aria-describedby="passwordHelpBlock"
                     />
-                    <div className="d-flex d-flex-column align-item-end" style={{ width: "100%", paddingTop: "15px" }}>
-                        <ButtonComponent text="Login" onClick={() => {
-                            navigate("/dashboard-admin");
+                    <div className="d-flex d-flex-column align-item-end justify-content-center align-item-center" style={{ width: "100%", paddingTop: "15px" }}>
+                        <ButtonComponent text="Login" width={"70px"} isLoading={isLoading} onClick={async () => {
+                            userLoginEvent();
                         }} />
                     </div>
                 </div>
