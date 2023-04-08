@@ -5,8 +5,14 @@ import SubTextComponent from "../Shared/sub-text";
 import WhiteCurvedBox from "../Shared/white-curved-box";
 import { useState } from "react";
 import { loginUserService } from "../../Business/AuthService";
+import { connect } from "react-redux";
+import { ActionTypes } from "../../store/actionType";
+import { JwtPayloadType, decodeToken } from "../../Util/decodeToken";
+import { ToastContainer, toast } from "react-toastify";
+import { AppConstant } from "../../Util/AppConstants";
+import 'react-toastify/dist/ReactToastify.css';
 
-const LoginComponent = () => {
+const LoginComponent = (props: any) => {
 
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
@@ -16,6 +22,15 @@ const LoginComponent = () => {
     const userLoginEvent = async () => {
         setIsLoading(true);
         const idToken = await loginUserService(userName, password);
+        if (idToken !== AppConstant.LoginFailed) {
+            const user = decodeToken(idToken);
+            props.updateUserDetails(idToken, user);
+            if (user !== undefined) {
+                navigate("/dashboard-admin");
+            }
+        } else {
+            toast.error("Invalid email or password. Try again.");
+        }
         setIsLoading(false);
     }
 
@@ -54,7 +69,34 @@ const LoginComponent = () => {
                 </div>
             </WhiteCurvedBox>
         </div>
+        <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
     </div>
 }
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+    };
+};
 
-export default LoginComponent;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
+            type: ActionTypes.SAVE_USER_DETAILS,
+            payload: { idToken, user }
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

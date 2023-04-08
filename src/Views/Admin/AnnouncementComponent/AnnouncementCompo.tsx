@@ -4,8 +4,11 @@ import ButtonComponent from "../../Shared/button-component";
 import AnnoucementCard from "./AnnouncementCard";
 import AddAnnouncementModel from "./AddAnnouncementModel";
 import { useState } from "react";
+import { connect } from "react-redux";
+import { JwtPayloadType } from "../../../Util/decodeToken";
+import { ActionTypes } from "../../../store/actionType";
 
-const AnnouncementCompo = () => {
+const AnnouncementCompo = (props: any) => {
     const [showDialog, setShowDialog] = useState(false);
 
     return <div className="d-flex flex-column justify-content-start align-item-start">
@@ -24,9 +27,9 @@ const AnnouncementCompo = () => {
             />
             <button onClick={() => { }} className="topic-font bg-color-white"
                 style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
-            <ButtonComponent width={"138px"} text="Create Announcement" onClick={() => {
+            {props.user.admin ? <ButtonComponent width={"138px"} text="Create Announcement" onClick={() => {
                 setShowDialog(true);
-            }} />
+            }} /> : <></>}
         </div>
 
         <div className="d-flex flex-column justify-content-start align-item-start">
@@ -36,11 +39,27 @@ const AnnouncementCompo = () => {
             <AnnoucementCard />
         </div>
 
-        <AddAnnouncementModel
+        {props.user.admin ? <AddAnnouncementModel
             show={showDialog}
             onHide={() => setShowDialog(false)}
-        />
+        /> : <></>}
     </div>;
 }
 
-export default AnnouncementCompo;
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
+            type: ActionTypes.SAVE_USER_DETAILS,
+            payload: { idToken, user }
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnnouncementCompo);

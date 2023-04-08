@@ -7,8 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import AnnouncementCompo from "../AnnouncementComponent/AnnouncementCompo";
 import MyProfileView from "../../ProfileComponent/MyProfileView";
 import MotivationView from "../../MotivationView/MotivationView";
+import { connect } from "react-redux";
+import { JwtPayloadType } from "../../../Util/decodeToken";
+import { ActionTypes } from "../../../store/actionType";
 
-const AdminDashboardComponent = () => {
+const AdminDashboardComponent = (props: any) => {
 
     const [currentPage, setCurrentPage] = useState("dashboard");
     const navigate = useNavigate();
@@ -21,14 +24,14 @@ const AdminDashboardComponent = () => {
                     setCurrentPage("dashboard");
                     navigate("/dashboard-admin");
                 }} title="Dashboard" />
-                <DashboardBtn isClicked={currentPage === "profile"} onClick={() => {
+                {!props.user.admin ? <DashboardBtn isClicked={currentPage === "profile"} onClick={() => {
                     setCurrentPage("profile");
                     navigate(`profile`);
-                }} title="My Profile" />
-                <DashboardBtn isClicked={currentPage === "emp"} onClick={() => {
+                }} title="My Profile" /> : <></>}
+                {props.user.admin ? <DashboardBtn isClicked={currentPage === "emp"} onClick={() => {
                     setCurrentPage("emp");
                     navigate("/dashboard-admin/manage-emoloyee");
-                }} title="Manage Employees" />
+                }} title="Manage Employees" /> : <></>}
                 <DashboardBtn isClicked={currentPage === "announcement"} onClick={() => {
                     setCurrentPage("announcement");
                     navigate("/dashboard-admin/announcements");
@@ -57,8 +60,20 @@ const AdminDashboardComponent = () => {
     </div>;
 };
 
-export default AdminDashboardComponent;
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+    };
+};
 
-function useRouteMatch(): { path: any; url: any; } {
-    throw new Error("Function not implemented.");
-}
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
+            type: ActionTypes.SAVE_USER_DETAILS,
+            payload: { idToken, user }
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboardComponent);
