@@ -4,7 +4,7 @@ const WrapTextComponent = (props: any) => {
         height: "20px",
         borderRadius: "50px"
     }}>
-        <img src={props.icon} height={"10px"} />
+        <img src={props.icon} height={"10px"} style={{paddingRight: "5px"}}/>
         {props.text}
     </div>;
 };

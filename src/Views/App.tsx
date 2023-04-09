@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAuthToken } from '../Business/AuthService';
+import { getAuthToken } from '../Business/Auth/AuthService';
 import '../Styles/App.css';
 import { AppConstant } from '../Util/AppConstants';
 import { JwtPayloadType, decodeToken } from '../Util/decodeToken';
@@ -25,7 +25,6 @@ function App(props: any) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken();
-        console.log("idToken: " + idToken);
 
         if (idToken !== AppConstant.LoginFailed) {
           const user = decodeToken(idToken);
