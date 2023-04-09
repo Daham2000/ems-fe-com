@@ -25,7 +25,6 @@ function App(props: any) {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const idToken = await user.getIdToken();
-        console.log("idToken: " + idToken);
 
         if (idToken !== AppConstant.LoginFailed) {
           const user = decodeToken(idToken);

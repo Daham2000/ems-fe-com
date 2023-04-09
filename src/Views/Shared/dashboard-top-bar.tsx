@@ -11,9 +11,9 @@ const DashboardTopBar = (props: any) => {
                 <div className="sub-topic-font" style={{ fontSize: "11px" }}>{getDashboardDateTime()}</div>
                 <div className="topic-font" style={{ fontStyle: "italic", fontSize: "10px", paddingTop: "6px" }}>All growth depends upon activity.</div>
             </div>
-            <img height="35px" width="35px"
+            <img height="45px" width="45px"
                 className="circle-div"
-                src={props.profileUrl} />
+                src={props.myDetails.image} />
         </div>
 
         {!props.isBirthday ? <div></div> : <div className="d-flex d-flex-column align-item-end" style={{ width: "84vw" }}>

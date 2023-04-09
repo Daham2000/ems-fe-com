@@ -1,7 +1,7 @@
 import DashboardBtn from "../../Shared/dashboard-btn";
 import { Routes, Route } from "react-router-dom";
 import DashboardView from "./dashboard-view";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ManageEmployeeComponent from "../ManageEmployeeComponent/manage-emp-component";
 import { useNavigate } from 'react-router-dom';
 import AnnouncementCompo from "../AnnouncementComponent/AnnouncementCompo";
@@ -10,11 +10,16 @@ import MotivationView from "../../MotivationView/MotivationView";
 import { connect } from "react-redux";
 import { JwtPayloadType } from "../../../Util/decodeToken";
 import { ActionTypes } from "../../../store/actionType";
+import { getMyDetailsService } from "../../../Business/GetEmpDetailsService";
 
 const AdminDashboardComponent = (props: any) => {
 
     const [currentPage, setCurrentPage] = useState("dashboard");
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+    }, []);
 
     return <div className="d-flex d-flex-row bg-color-grey" style={{ height: "100vh" }}>
         <div className="d-flex d-flex-column bg-color-white" style={{ width: "200px" }}>
