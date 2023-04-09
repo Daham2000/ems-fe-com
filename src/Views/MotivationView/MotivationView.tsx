@@ -1,6 +1,9 @@
 import DashboardTopBar from "../Shared/dashboard-top-bar";
 import { Form } from "react-bootstrap";
 import ButtonComponent from "../Shared/button-component";
+import { connect } from "react-redux";
+import { JwtPayloadType } from "../../Util/decodeToken";
+import { ActionTypes } from "../../store/actionType";
 
 const EmployeeRequestCard = (props: any) => {
     return <div className="d-flex flex-column justify-content-start align-item-start bg-color-white"
@@ -17,7 +20,7 @@ const EmployeeRequestCard = (props: any) => {
     </div>
 }
 
-const MotivationView = () => {
+const MotivationView = (props: any) => {
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
             isBirthday={false}
@@ -32,7 +35,7 @@ const MotivationView = () => {
             <EmployeeRequestCard name="John Cick" empID="E0001" jobTitle="Software developer" />
         </div>
 
-        <div className="d-flex flex-row bg-color-white justify-content-between"
+        {!props.user.admin ? <div className="d-flex flex-row bg-color-white justify-content-between"
             style={{ borderRadius: "10px", width: "auto", marginTop: "10px", paddingLeft: "10px", paddingRight: "10px", paddingTop: "10px", paddingBottom: "10px", marginBottom: "15px" }}>
             <div className="d-flex flex-row">
                 <div className="d-flex flex-column justify-content-start align-item-start" style={{ marginRight: "20px" }}>
@@ -65,9 +68,9 @@ const MotivationView = () => {
                 <img height="340px" width="470px"
                     src={"https://post.healthline.com/wp-content/uploads/2020/08/stressed_man_writing-732x549-thumbnail.jpg"} />
             </div>
-        </div>
+        </div> : <></>}
 
-        <div className="grid-layout">
+        {!props.user.admin ? <div className="grid-layout">
             <div className="d-flex flex-column bg-color-white justify-content-start align-item-start"
                 style={{ borderRadius: "10px", width: "auto", marginTop: "10px", paddingLeft: "10px", paddingRight: "10px", paddingTop: "10px", paddingBottom: "10px", marginBottom: "15px" }}>
                 <div className="sub-topic-font" style={{ marginTop: "5px", marginBottom: "1px", fontSize: "13px" }}>{"Our Mentor Team"}</div>
@@ -100,7 +103,7 @@ const MotivationView = () => {
                 <MotivationSelfCard />
                 <MotivationSelfCard />
             </div>
-        </div>
+        </div> : <></>}
 
     </div>;
 };
@@ -129,4 +132,20 @@ const MotivationSelfCard = () => {
     </div>;
 }
 
-export default MotivationView;
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
+            type: ActionTypes.SAVE_USER_DETAILS,
+            payload: { idToken, user }
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MotivationView);

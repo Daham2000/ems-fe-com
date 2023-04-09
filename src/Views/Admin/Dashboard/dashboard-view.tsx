@@ -13,7 +13,6 @@ const DashboardView = () => {
             profileUrl="https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg"
             wish={1} />
 
-
         <div className="d-flex d-flex-column button-color" style={{
             padding: "20px",
             marginTop: "15px",
