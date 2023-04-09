@@ -35,6 +35,10 @@ export class Convert {
         return cast(JSON.parse(json), r("IEmployee"));
     }
 
+    public static toIEmployeeList(json: string): IEmployee[] {
+        return cast(JSON.parse(json), a(r("IEmployee")));
+    }
+
     public static iEmployeeToJson(value: IEmployee): string {
         return JSON.stringify(uncast(value, r("IEmployee")), null, 2);
     }

@@ -77,7 +77,7 @@ const ManageEmployeeComponent = () => {
                     <Form.Control
                         type="text"
                         style={{ height: '30px', marginRight: "4px" }}
-                        id="userName"
+                        id="search"
                         aria-describedby="passwordHelpBlock"
                     />
                     <button onClick={() => { }} className="topic-font bg-color-white"

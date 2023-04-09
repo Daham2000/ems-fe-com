@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { JwtPayloadType } from "../../../Util/decodeToken";
 import { ActionTypes } from "../../../store/actionType";
 import { getMyDetailsService } from "../../../Business/Employee/GetEmpDetailsService";
+import { logoutService } from "../../../Business/Auth/AuthService";
 
 const AdminDashboardComponent = (props: any) => {
 
@@ -45,10 +46,11 @@ const AdminDashboardComponent = (props: any) => {
                     setCurrentPage("help");
                     navigate("/dashboard-admin/help");
                 }} title="Motivation Page" />
-                <DashboardBtn isClicked={currentPage === "settings"} onClick={() => {
-                    setCurrentPage("settings");
-                    navigate("/dashboard-admin/settings");
-                }} title="Settings" />
+                <DashboardBtn isClicked={currentPage === "settings"} onClick={async () => {
+                    setCurrentPage("logout");
+                    await logoutService();
+                    navigate("/login");
+                }} title="Signout" />
             </div>
         </div>
 

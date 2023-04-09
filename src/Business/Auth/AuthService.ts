@@ -26,3 +26,7 @@ export const getAuthToken = async (): Promise<string> => {
         return AppConstant.LoginFailed;
     }
 }
+
+export const logoutService = async () => {
+    await auth.signOut();
+}

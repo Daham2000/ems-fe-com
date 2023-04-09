@@ -19,7 +19,7 @@ export interface IHoliday {
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
-export class Convert {
+export class Convert {  
     public static toIHoliday(json: string): IHoliday[] {
         return cast(JSON.parse(json), a(r("IHoliday")));
     }

@@ -25,32 +25,33 @@ const DashboardView = (props: any) => {
     const [myDetails, setMyDetails] = useState<IEmployee | number>();
 
     useEffect(() => {
-        if (!props.user.admin) {
-            loadMyDetails();
-        }
+        loadMyDetails();
     }, []);
 
     const loadMyDetails = async () => {
         try {
             const token = props.idToken;
-            const res = await getMyDetailsService(token);
-            if (res !== 401) {
-                setMyDetails(res);
-                props.saveMyDetails(res);
-                if (typeof (res) == "object") {
-                    var mydate = new Date(res?.birthDay);
-                    var now = new Date();
-                    if (mydate.getDate() === now.getDate() && mydate.getMonth() === now.getMonth()) {
-                        setIsBirthday(true);
-                    } else {
-                        setIsBirthday(false);
+            if (!props.user.admin) {
+                const res = await getMyDetailsService(token);
+                if (res !== 401) {
+                    setMyDetails(res);
+                    props.saveMyDetails(res);
+                    if (typeof (res) == "object") {
+                        var mydate = new Date(res?.birthDay);
+                        var now = new Date();
+                        if (mydate.getDate() === now.getDate() && mydate.getMonth() === now.getMonth()) {
+                            setIsBirthday(true);
+                        } else {
+                            setIsBirthday(false);
+                        }
                     }
                 }
-                const annoucementList = await getCompanyAnnoucements(token);
-                const holidayList = await getCompanyHolidayList(token);
-                setAnnoucementList(annoucementList);
-                setHolidayList(holidayList);
             }
+
+            const annoucementList = await getCompanyAnnoucements(token);
+            const holidayList = await getCompanyHolidayList(token);
+            setAnnoucementList(annoucementList);
+            setHolidayList(holidayList);
             setIsLoading(false);
         } catch (e) {
             console.log(e);
