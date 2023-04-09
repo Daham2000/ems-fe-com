@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAuthToken } from '../Business/AuthService';
+import { getAuthToken } from '../Business/Auth/AuthService';
 import '../Styles/App.css';
 import { AppConstant } from '../Util/AppConstants';
 import { JwtPayloadType, decodeToken } from '../Util/decodeToken';

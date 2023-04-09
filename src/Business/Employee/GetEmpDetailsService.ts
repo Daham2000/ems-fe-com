@@ -1,6 +1,6 @@
-import { Convert, IEmployee } from "../db/Model/Employee";
-import getAxios from '../db/Axios/index';
-import { ApiConstants } from "../Util/ApiContansts";
+import { Convert, IEmployee } from "../../db/Model/Employee";
+import getAxios from '../../db/Axios/index';
+import { ApiConstants } from "../../Util/ApiContansts";
 
 export const getMyDetailsService = async (idToken: string): Promise<IEmployee | number> => {    
     const instance = await getAxios(idToken);

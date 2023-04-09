@@ -10,7 +10,7 @@ import MotivationView from "../../MotivationView/MotivationView";
 import { connect } from "react-redux";
 import { JwtPayloadType } from "../../../Util/decodeToken";
 import { ActionTypes } from "../../../store/actionType";
-import { getMyDetailsService } from "../../../Business/GetEmpDetailsService";
+import { getMyDetailsService } from "../../../Business/Employee/GetEmpDetailsService";
 
 const AdminDashboardComponent = (props: any) => {
 

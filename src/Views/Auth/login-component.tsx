@@ -4,7 +4,7 @@ import ButtonComponent from "../Shared/button-component";
 import SubTextComponent from "../Shared/sub-text";
 import WhiteCurvedBox from "../Shared/white-curved-box";
 import { useState } from "react";
-import { loginUserService } from "../../Business/AuthService";
+import { loginUserService } from "../../Business/Auth/AuthService";
 import { connect } from "react-redux";
 import { ActionTypes } from "../../store/actionType";
 import { JwtPayloadType, decodeToken } from "../../Util/decodeToken";

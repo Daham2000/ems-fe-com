@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import { getDashboardDateTime, getDashboardTimeWish } from "../../Util/UtilityService";
 
 const DashboardTopBar = (props: any) => {
@@ -24,4 +25,18 @@ const DashboardTopBar = (props: any) => {
     </div>;
 };
 
-export default DashboardTopBar;
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+        myDetails: state.myDetails
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+ 
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardTopBar);
