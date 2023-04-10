@@ -2,7 +2,7 @@ import DashboardTopBar from "../../Shared/dashboard-top-bar";
 import { Form } from "react-bootstrap";
 import ButtonComponent from "../../Shared/button-component";
 import EmployeeCard from "./EmployeeCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import EditEmployeeComponent from "./EditEmployeeComponent";
 import StarIcon from "../../../assets/starIcon.svg";
@@ -20,6 +20,11 @@ import {
 import { Line } from 'react-chartjs-2';
 import AddEmployeeModel from "./ModelAddEmpComponent";
 import AddPerformanceModel from "./AddPerformanceModel";
+import { connect } from "react-redux";
+import { JwtPayloadType } from "../../../Util/decodeToken";
+import { ActionTypes } from "../../../store/actionType";
+import { IEmployee } from "../../../db/Model/Employee";
+import { getAllEmployeeService } from "../../../Business/Employee/GetAllEmployeeService";
 
 export const options = {
     responsive: true,
@@ -48,11 +53,25 @@ const data = {
     ],
 };
 
-const ManageEmployeeComponent = () => {
+const ManageEmployeeComponent = (props: any) => {
     const [showDialog, setShowDialog] = useState(false);
     const [showAddPerformanceModel, setShowAddPerformanceModel] = useState(false);
     const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     const [openedEmployee, setOpenedEmployee] = useState(false);
+    const [employeeList, setEmployeeList] = useState<IEmployee[]>([]);
+
+    useEffect(() => {
+        if (employeeList.length === 0) {
+            getData();
+        }
+    }, []);
+
+    const getData = async () => {
+        const token = props.idToken;
+        const list = await getAllEmployeeService(token);
+        console.log(list);
+        setEmployeeList(list);
+    }
 
     ChartJS.register(
         CategoryScale,
@@ -78,6 +97,9 @@ const ManageEmployeeComponent = () => {
                         type="text"
                         style={{ height: '30px', marginRight: "4px" }}
                         id="search"
+                        onChange={(event) => {
+
+                        }}
                         aria-describedby="passwordHelpBlock"
                     />
                     <button onClick={() => { }} className="topic-font bg-color-white"
@@ -87,21 +109,13 @@ const ManageEmployeeComponent = () => {
                     }} />
                 </div>
                 <div className="d-flex flex-column" style={{ marginTop: "10px" }}>
-                    <EmployeeCard onClick={() => {
-                        setOpenedEmployee(true);
-                    }} />
-                    <EmployeeCard onClick={() => {
-                        setOpenedEmployee(true);
-                    }} />
-                    <EmployeeCard onClick={() => {
-                        setOpenedEmployee(true);
-                    }} />
-                    <EmployeeCard onClick={() => {
-                        setOpenedEmployee(true);
-                    }} />
-                    <EmployeeCard onClick={() => {
-                        setOpenedEmployee(true);
-                    }} />
+                    {
+                        employeeList.map((obj) => {
+                            return <EmployeeCard emp={obj} onClick={() => {
+                                setOpenedEmployee(true);
+                            }} />;
+                        })
+                    }
                 </div>
             </> : <div className="d-flex flex-row">
                 <div className="d-flex flex-column" style={{ marginTop: "18px", marginRight: "20px" }}>
@@ -210,4 +224,20 @@ const ManageEmployeeComponent = () => {
     </div>;
 };
 
-export default ManageEmployeeComponent;
+const mapStateToProps = (state: any) => {
+    return {
+        idToken: state.idToken,
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
+            type: ActionTypes.SAVE_USER_DETAILS,
+            payload: { idToken, user }
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageEmployeeComponent);
