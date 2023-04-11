@@ -189,7 +189,7 @@ function AddEmployeeModel(props: any) {
                         }} aria-label="Default select example">
                             {
                                 Constants.UserRoles.map((role) => {
-                                    return <option>{role}</option>
+                                    return <option id={role}>{role}</option>
                                 })
                             }
                         </Form.Select>

@@ -38,24 +38,23 @@ const EmployeeCard = (props: any) => {
         switch (role) {
             case Constants.AdminRole:
                 return Constants.QaRoleSkills.map((skill) => {
-                    return <div className="skill-card">{skill}</div>
+                    return <div id={skill} className="skill-card">{skill}</div>
                 })
             case Constants.QaRole:
                 return Constants.QaRoleSkills.map((skill) => {
-                    return <div className="skill-card">{skill}</div>
+                    return <div id={skill} className="skill-card">{skill}</div>
                 })
-                return <div className="skill-card">{Constants.QaRoleSkills}</div>
             case Constants.BaRole:
                 return Constants.BaRoleSkills.map((skill) => {
-                    return <div className="skill-card">{skill}</div>
+                    return <div id={skill} className="skill-card">{skill}</div>
                 })
             case Constants.PmRole:
                 return Constants.PmRoleSkills.map((skill) => {
-                    return <div className="skill-card">{skill}</div>
+                    return <div id={skill} className="skill-card">{skill}</div>
                 })
             case Constants.devRole:
                 return Constants.DevRoleSkills.map((skill) => {
-                    return <div className="skill-card">{skill}</div>
+                    return <div id={skill} className="skill-card">{skill}</div>
                 })
         }
     }

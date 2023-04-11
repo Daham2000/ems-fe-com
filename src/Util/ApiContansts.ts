@@ -3,4 +3,5 @@ export const ApiConstants = {
     Announcements: "announcements",
     Holidays: "/holidays",
     Employees: "/employee",
+    Performance: "/performance-report"
 };
