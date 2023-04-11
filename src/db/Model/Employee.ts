@@ -28,6 +28,22 @@ export interface IEmployee {
     updatedAt: Date;
 }
 
+export interface Employee {
+    name: string;
+    passwordHash: string;
+    userName: string;
+    address: string;
+    nic: string;
+    userRole: string;
+    joinedDate: string;
+    isAvailable: boolean;
+    jobTitle: string;
+    birthDay: string;
+    contactNum: number;
+    email: string;
+    image: string;
+}
+
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
@@ -41,6 +57,10 @@ export class Convert {
 
     public static iEmployeeToJson(value: IEmployee): string {
         return JSON.stringify(uncast(value, r("IEmployee")), null, 2);
+    }
+
+    public static employeeToJson(value: Employee): string {
+        return JSON.stringify(uncast(value, r("Employee")), null);
     }
 }
 

@@ -72,7 +72,7 @@ const EmployeeCard = (props: any) => {
             className="circle-div"
             src={props.emp.image} />
         <div className="d-flex flex-column align-item-center" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-            <div style={{ fontSize: "15px" }}>{"Jenny Claraa"}</div>
+            <div style={{ fontSize: "15px" }}>{props.emp.name}</div>
             <div style={{ fontSize: "12px", color: "#808080" }}>{findEmpTitle(props.emp.userRole)}</div>
             <div className="d-flex flex-row justify-content-center" style={{
                 borderRadius: "10px",

@@ -23,8 +23,11 @@ import AddPerformanceModel from "./AddPerformanceModel";
 import { connect } from "react-redux";
 import { JwtPayloadType } from "../../../Util/decodeToken";
 import { ActionTypes } from "../../../store/actionType";
-import { IEmployee } from "../../../db/Model/Employee";
+import { Employee, IEmployee } from "../../../db/Model/Employee";
 import { getAllEmployeeService } from "../../../Business/Employee/GetAllEmployeeService";
+import { ToastContainer, toast } from "react-toastify";
+import { addEmployeeService } from "../../../Business/Employee/AddEmployeeService";
+import { Constants } from "../../../Util/constant";
 
 export const options = {
     responsive: true,
@@ -59,6 +62,7 @@ const ManageEmployeeComponent = (props: any) => {
     const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     const [openedEmployee, setOpenedEmployee] = useState(false);
     const [employeeList, setEmployeeList] = useState<IEmployee[]>([]);
+    const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
 
     useEffect(() => {
         if (employeeList.length === 0) {
@@ -71,6 +75,72 @@ const ManageEmployeeComponent = (props: any) => {
         const list = await getAllEmployeeService(token);
         console.log(list);
         setEmployeeList(list);
+    }
+
+    const saveEmployee = async (employee: Employee) => {
+        const res = await addEmployeeService(props.IdToken, employee);
+        if (res === 201) {
+            toast.success("Employee Added and email send to the employee.");
+            setShowDialog(false);
+        } else {
+            toast.error("Employee added unsuccesfull. please try again.");
+        }
+    }
+
+    const findEmpTitle = (role: string) => {
+        switch (role) {
+            case Constants.AdminRole:
+                return Constants.adminTitle;
+            case Constants.QaRole:
+                return Constants.qaTitle;
+            case Constants.BaRole:
+                return Constants.baTitle;
+            case Constants.PmRole:
+                return Constants.pmTitle;
+            case Constants.devRole:
+                return Constants.devTitle;
+        }
+    }
+
+    const findEmpDes = (role: string) => {
+        switch (role) {
+            case Constants.AdminRole:
+                return Constants.adminDescription;
+            case Constants.QaRole:
+                return Constants.qaDescription;
+            case Constants.BaRole:
+                return Constants.baDescription;
+            case Constants.PmRole:
+                return Constants.pmDescription;
+            case Constants.devRole:
+                return Constants.devDescription;
+        }
+    }
+
+    const getSkillList = (role: string) => {
+        switch (role) {
+            case Constants.AdminRole:
+                return Constants.QaRoleSkills.map((skill) => {
+                    return <div className="skill-card">{skill}</div>
+                })
+            case Constants.QaRole:
+                return Constants.QaRoleSkills.map((skill) => {
+                    return <div className="skill-card">{skill}</div>
+                })
+                return <div className="skill-card">{Constants.QaRoleSkills}</div>
+            case Constants.BaRole:
+                return Constants.BaRoleSkills.map((skill) => {
+                    return <div className="skill-card">{skill}</div>
+                })
+            case Constants.PmRole:
+                return Constants.PmRoleSkills.map((skill) => {
+                    return <div className="skill-card">{skill}</div>
+                })
+            case Constants.devRole:
+                return Constants.DevRoleSkills.map((skill) => {
+                    return <div className="skill-card">{skill}</div>
+                })
+        }
     }
 
     ChartJS.register(
@@ -89,7 +159,7 @@ const ManageEmployeeComponent = (props: any) => {
             isBirthday={false}
             profileUrl="https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg"
             wish={1} />
-        <div className="sub-topic-font " style={{ marginTop: "15px" }}>{!openedEmployee ? "Manage Employees" : "Jenny Claraa’s Profile page"}</div>
+        <div className="sub-topic-font " style={{ marginTop: "15px" }}>{!openedEmployee ? "Manage Employees" : selectedEmployee?.name + "'s Profile page"}</div>
         {
             !openedEmployee ? <>
                 <div className="d-flex flex-row justify-content-start align-item-start" style={{ marginTop: "10px" }}>
@@ -112,6 +182,7 @@ const ManageEmployeeComponent = (props: any) => {
                     {
                         employeeList.map((obj) => {
                             return <EmployeeCard emp={obj} onClick={() => {
+                                setSelectedEmployee(obj);
                                 setOpenedEmployee(true);
                             }} />;
                         })
@@ -124,10 +195,10 @@ const ManageEmployeeComponent = (props: any) => {
                         <div className="d-flex flex-column align-item-center" style={{ marginRight: "20px" }}>
                             <img height="100px" width="100px"
                                 className="circle-div"
-                                src={"https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg"} />
+                                src={selectedEmployee?.image} />
                             <div className="d-flex flex-column align-item-center" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-                                <div style={{ fontSize: "15px" }}>{"Jenny Claraa"}</div>
-                                <div style={{ fontSize: "12px", color: "#808080" }}>{"Product Manager"}</div>
+                                <div style={{ fontSize: "15px" }}>{selectedEmployee?.name}</div>
+                                <div style={{ fontSize: "12px", color: "#808080" }}>{findEmpTitle(selectedEmployee?.userRole ?? "")}</div>
                                 <div className="d-flex flex-row justify-content-center" style={{
                                     borderRadius: "10px",
                                     marginTop: "5px",
@@ -141,17 +212,12 @@ const ManageEmployeeComponent = (props: any) => {
                         </div>
                         <div className="d-flex flex-column justify-content-start align-item-start">
                             <div style={{ marginLeft: "10px", marginBottom: "5px", textAlign: "start", width: "250px", marginRight: "10px", fontSize: "14px", color: "#808080" }}>
-                                “I am always capable of identifying the needs of our customers regarding a product”
+                                {findEmpDes(selectedEmployee?.userRole ?? "")}
                             </div>
                             <div className="d-flex flex-column align-item-start" style={{ width: "150px", marginLeft: "10px", marginRight: "10px" }}>
                                 <div style={{ fontSize: "12px", color: "#808080", fontWeight: "600" }}>{"Skills"}</div>
-                                <div className="d-flex flex-row" style={{ width: "200px" }}>
-                                    <div className="skill-card">Management</div>
-                                    <div className="skill-card">Management</div>
-                                </div>
-                                <div className="d-flex flex-row" style={{ width: "200px" }}>
-                                    <div className="skill-card">Management</div>
-                                    <div className="skill-card">Management</div>
+                                <div className="grid-container">
+                                    {getSkillList(selectedEmployee?.userRole ?? "")}
                                 </div>
                             </div>
                         </div>
@@ -213,6 +279,10 @@ const ManageEmployeeComponent = (props: any) => {
 
         <AddEmployeeModel
             show={showDialog}
+            idToken={props.idToken}
+            onSave={(emp: Employee) => {
+                saveEmployee(emp)
+            }}
             onHide={() => setShowDialog(false)}
         />
 
@@ -220,6 +290,19 @@ const ManageEmployeeComponent = (props: any) => {
             show={showAddPerformanceModel}
             isEdit={showEditPerformanceModel}
             onHide={() => { setShowAddPerformanceModel(false); setShowEditPerformanceModel(false) }}
+        />
+
+        <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
         />
     </div>;
 };
