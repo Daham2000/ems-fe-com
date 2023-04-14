@@ -3,13 +3,30 @@ import { Form } from "react-bootstrap";
 import ButtonComponent from "../../Shared/button-component";
 import AnnoucementCard from "./AnnouncementCard";
 import AddAnnouncementModel from "./AddAnnouncementModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { JwtPayloadType } from "../../../Util/decodeToken";
 import { ActionTypes } from "../../../store/actionType";
+import { getCompanyAnnoucements } from "../../../Business/Announcements/GetAnnouncement";
+import { IAnnouncement } from "../../../db/Model/Announcement";
 
 const AnnouncementCompo = (props: any) => {
     const [showDialog, setShowDialog] = useState(false);
+    const [annuncements, setAnnuncement] = useState<IAnnouncement[]>([]);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+        try {
+            const token = props.idToken;
+            const list = await getCompanyAnnoucements(token);
+            setAnnuncement(list);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
@@ -22,7 +39,7 @@ const AnnouncementCompo = (props: any) => {
             <Form.Control
                 type="text"
                 style={{ height: '30px', marginRight: "4px" }}
-                id="userName"
+                id="search"
                 aria-describedby="passwordHelpBlock"
             />
             <button onClick={() => { }} className="topic-font bg-color-white"
@@ -34,9 +51,11 @@ const AnnouncementCompo = (props: any) => {
 
         <div className="d-flex flex-column justify-content-start align-item-start">
             <div style={{ height: "10px" }} />
-            <AnnoucementCard />
-            <AnnoucementCard />
-            <AnnoucementCard />
+            {
+                annuncements.map((ann) => {
+                    return (<AnnoucementCard annuncements={ann} />);
+                })
+            }
         </div>
 
         {props.user.admin ? <AddAnnouncementModel
