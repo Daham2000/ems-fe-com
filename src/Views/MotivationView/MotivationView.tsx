@@ -2,25 +2,68 @@ import DashboardTopBar from "../Shared/dashboard-top-bar";
 import { Form } from "react-bootstrap";
 import ButtonComponent from "../Shared/button-component";
 import { connect } from "react-redux";
-import { JwtPayloadType } from "../../Util/decodeToken";
-import { ActionTypes } from "../../store/actionType";
+import { getMotivationService } from "../../Business/Motivational/getMotivationService";
+import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
+import { IMotivationRequest } from "../../db/Model/MotivationRequest";
+import { getSingleEmpDetailsService } from "../../Business/Employee/GetSingleEmpDetails";
+import { IEmployee } from "../../db/Model/Employee";
 
 const EmployeeRequestCard = (props: any) => {
+
+    const [employee, setEmployee] = useState<IEmployee>();
+
+    useEffect(() => {
+        loadEmpDetails();
+    }, []);
+
+    const loadEmpDetails = async () => {
+        const emp = await getSingleEmpDetailsService(props.request.empId, props.isToken);
+        console.log(emp);
+        if(emp.address !== "") {
+            setEmployee(emp);
+        }
+    }
+
     return <div className="d-flex flex-column justify-content-start align-item-start bg-color-white"
         style={{ width: "auto", height: "auto", marginTop: "10px", marginBottom: "5px", padding: "15px", borderRadius: "10px" }}>
-        <div className="announcement-title-normal">{props.name}</div>
-        <div className="announcement-title-normal" style={{ fontSize: "12px" }}>{"EMP ID: " + props.empID}</div>
-        <div className="announcement-title-normal" style={{ fontSize: "12px" }}>{"EMP Job title: " + props.jobTitle}</div>
-        <div className="announcement-des-normal">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea repellat, reiciendis
-            quo corporis officiis, voluptatem magni perspiciatis debitis est
-            dignissimos quos praesentium suscipit velit accusamus dolor
-            exercitationem impedit cum atque. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus, omnis itaque non fuga quas est reprehenderit aliquam autem recusandae
-            voluptatibus distinctio porro quasi dignissimos aut. Molestiae optio voluptatem cumque odio.</div>
+        <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
+
+        <div className="announcement-title-normal">{employee?.name}</div>
+        <div className="announcement-title-normal" style={{ fontSize: "12px" }}>{"EMP ID: " + employee?.empID}</div>
+        <div className="announcement-title-normal" style={{ fontSize: "12px" }}>{"EMP Job title: " + employee?.jobTitle}</div>
+        <div className="announcement-des-normal">{props.request.description}</div>
     </div>
 }
 
 const MotivationView = (props: any) => {
+
+    const [motivationList, setMotivationList] = useState<IMotivationRequest[]>([]);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+        try {
+            const list = await getMotivationService(props.idToken);
+            setMotivationList(list);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
             isBirthday={false}
@@ -28,12 +71,16 @@ const MotivationView = (props: any) => {
             wish={1} />
         <div className="sub-topic-font " style={{ marginTop: "15px" }}>{"Motivation Page"}</div>
 
-        <div className="sub-topic-font" style={{ marginTop: "15px", fontSize: "12px" }}>{"Employee requests"}</div>
-        <div className="d-flex flex-column justify-content-start align-item-start">
-            <EmployeeRequestCard name="John Cick" empID="E0001" jobTitle="Software developer" />
-            <EmployeeRequestCard name="John Cick" empID="E0001" jobTitle="Software developer" />
-            <EmployeeRequestCard name="John Cick" empID="E0001" jobTitle="Software developer" />
-        </div>
+        {props.user.admin ? <><div className="sub-topic-font" style={{ marginTop: "15px", fontSize: "12px" }}>{"Employee requests"}</div>
+            <div className="d-flex flex-column justify-content-start align-item-start">
+                {
+                    motivationList.map((m) => {
+                        return <>
+                            <EmployeeRequestCard idToken={props.idToken} request={m}/>
+                        </>
+                    })
+                }
+            </div> </> : <></>}
 
         {!props.user.admin ? <div className="d-flex flex-row bg-color-white justify-content-between"
             style={{ borderRadius: "10px", width: "auto", marginTop: "10px", paddingLeft: "10px", paddingRight: "10px", paddingTop: "10px", paddingBottom: "10px", marginBottom: "15px" }}>
@@ -141,10 +188,6 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        updateUserDetails: (idToken: string, user: JwtPayloadType) => dispatch({
-            type: ActionTypes.SAVE_USER_DETAILS,
-            payload: { idToken, user }
-        })
     };
 };
 
