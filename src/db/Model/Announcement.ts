@@ -20,6 +20,14 @@ export interface IAnnouncement {
     updatedAt: Date;
 }
 
+export interface Announcement {
+    announcementTitle: string;
+    message: string;
+    sendBy: string;
+    sendTo: string;
+    date: string;
+}
+
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
