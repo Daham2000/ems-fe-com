@@ -1,8 +1,5 @@
-import DashboardTopBar from "../../Shared/dashboard-top-bar";
-import { Form } from "react-bootstrap";
 import ButtonComponent from "../../Shared/button-component";
-import EmployeeCard from "./EmployeeCard";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import EditEmployeeComponent from "./EditEmployeeComponent";
 import StarIcon from "../../../assets/starIcon.svg";
@@ -17,19 +14,16 @@ import {
     Filler,
     Legend,
 } from 'chart.js';
-import { Chart, Line } from 'react-chartjs-2';
-import AddEmployeeModel from "./ModelAddEmpComponent";
+import { Line } from 'react-chartjs-2';
 import AddPerformanceModel from "./AddPerformanceModel";
-import { connect } from "react-redux";
-import { JwtPayloadType } from "../../../Util/decodeToken";
-import { ActionTypes } from "../../../store/actionType";
-import { Employee, IEmployee } from "../../../db/Model/Employee";
-import { getAllEmployeeService } from "../../../Business/Employee/GetAllEmployeeService";
+import { IEmployee } from "../../../db/Model/Employee";
 import { ToastContainer, toast } from "react-toastify";
-import { addEmployeeService } from "../../../Business/Employee/AddEmployeeService";
 import { Constants } from "../../../Util/constant";
-import { IPerformanceReport } from "../../../db/Model/PerformanceReport";
+import { IPerformanceReport, IPerformanceReportUpdate, PerformanceReport } from "../../../db/Model/PerformanceReport";
 import { getPerformanceReportService } from "../../../Business/Performance/getPerformanceService";
+import { capitalizeFirstLetter, getDashboardDateTime } from "../../../Util/UtilityService";
+import { updatePerformanceReport } from "../../../Business/Performance/updatePerformanceService";
+import { addPerformanceReport } from "../../../Business/Performance/addPerformanceService";
 
 export const SingleEmplyeeView = (props: any) => {
 
@@ -49,6 +43,7 @@ export const SingleEmplyeeView = (props: any) => {
     const [showAddPerformanceModel, setShowAddPerformanceModel] = useState(false);
     const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>(props.emp);
+    const [selectedReport, setSelectedReport] = useState<IPerformanceReport>();
     const [performanceReport, setPerformanceReport] = useState<IPerformanceReport[]>([]);
     const [labels, setLabels] = useState<string[]>(["Jan"]);
     const [data, setData] = useState<any>({
@@ -79,6 +74,26 @@ export const SingleEmplyeeView = (props: any) => {
         Legend
     );
 
+    const onSubmit = async (isEdit: boolean, report?: IPerformanceReport, newReport?: PerformanceReport) => {
+        if (isEdit && (report !== undefined)) {
+            const res = await updatePerformanceReport(props.idToken, report);
+            if (res === 201) {
+                toast.success("Report updated...");
+            } else {
+                toast.error("Report can't update...");
+            }
+        } else {            
+            if (newReport !== undefined) {
+                const res = await addPerformanceReport(props.idToken, newReport);
+                if (res === 201) {
+                    toast.success("Report added...");
+                } else {
+                    toast.error("Report can't add...");
+                }
+            }
+        }
+    }
+
     const getData = async () => {
         const list = await getPerformanceReportService(props.idToken, props.emp.empID);
         setLabels(list.map((obj) => {
@@ -90,7 +105,7 @@ export const SingleEmplyeeView = (props: any) => {
                 {
                     fill: true,
                     label: 'Dataset 1',
-                    data: list.map((obj) => {
+                    data: list.reverse().map((obj) => {
                         return obj.overviewRate
                     }),
                     borderColor: 'rgb(53, 162, 235)',
@@ -164,7 +179,7 @@ export const SingleEmplyeeView = (props: any) => {
                     <div className="d-flex flex-column align-item-center" style={{ marginRight: "20px" }}>
                         <img height="100px" width="100px"
                             className="circle-div"
-                            src={selectedEmployee?.image} />
+                            src={selectedEmployee?.image}/>
                         <div className="d-flex flex-column align-item-center" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
                             <div style={{ fontSize: "15px" }}>{selectedEmployee?.name}</div>
                             <div style={{ fontSize: "12px", color: "#808080" }}>{findEmpTitle(selectedEmployee?.userRole ?? "")}</div>
@@ -199,14 +214,14 @@ export const SingleEmplyeeView = (props: any) => {
                         <div style={{ color: "black", marginTop: "1px", fontSize: "10px" }}>{"Jul 2022 - Present"}</div>
                         <div style={{ width: "400px", height: "200px" }}>
                             {<Line options={options} data={{
-                                labels: performanceReport.reverse().map((obj) => {
+                                labels: performanceReport.map((obj) => {
                                     return obj.month
                                 }),
                                 datasets: [
                                     {
                                         fill: true,
                                         label: 'Dataset 1',
-                                        data: performanceReport.reverse().map((obj) => {
+                                        data: performanceReport.map((obj) => {
                                             return obj.overviewRate
                                         }),
                                         borderColor: 'rgb(53, 162, 235)',
@@ -230,34 +245,49 @@ export const SingleEmplyeeView = (props: any) => {
                         }} />
                     </div>
                     <div className="d-flex flex-column" style={{ marginTop: "2px", marginBottom: "5px" }}>
-                        <div className="d-flex flex-row justify-content-between align-item-center" style={{
-                            width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
-                            borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
-                        }}>
-                            <div className="fontStyleReportCardLeft">January Report</div>
-                            <div className="fontStyleReportCardRight">2023 Jan 31</div>
-                        </div>
-                        <div className="d-flex flex-row justify-content-between align-item-center" style={{
-                            width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
-                            borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
-                        }}>
-                            <div className="fontStyleReportCardLeft">January Report</div>
-                            <div className="fontStyleReportCardRight">2023 Jan 31</div>
-                        </div>
-                        <div onClick={() => {
-                            setShowEditPerformanceModel(true);
-                            setShowAddPerformanceModel(true);
-                        }} className="d-flex flex-row justify-content-between align-item-center" style={{
-                            width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
-                            borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
-                        }}>
-                            <div className="fontStyleReportCardLeft">January Report</div>
-                            <div className="fontStyleReportCardRight">2023 Jan 31</div>
-                        </div>
+                        {
+                            performanceReport.map((per) => {
+                                return (
+                                    <div onClick={() => {
+                                        setShowEditPerformanceModel(true);
+                                        setShowAddPerformanceModel(true);
+                                        setSelectedReport(per);
+                                    }} className="d-flex flex-row justify-content-between align-item-center" style={{
+                                        width: "380px", padding: "5px", height: "25px", borderWidth: "1px", marginBottom: "5px",
+                                        borderRadius: "4px", borderColor: "#e6e6e6", borderStyle: "solid"
+                                    }}>
+                                        <div className="fontStyleReportCardLeft">{per.year + " " + capitalizeFirstLetter(per.month) + " Report"}</div>
+                                        <div className="fontStyleReportCardRight">{getDashboardDateTime(per.createdAt.toString())}</div>
+                                    </div>
+                                );
+                            })
+                        }
                     </div>
                 </div>
             </div>
-            <EditEmployeeComponent style={{ marginTop: "28px" }} />
+            <EditEmployeeComponent emp={selectedEmployee} style={{ marginTop: "28px" }} />
+
+            {showAddPerformanceModel ? <AddPerformanceModel
+                show={showAddPerformanceModel}
+                isEdit={showEditPerformanceModel}
+                emp={selectedEmployee}
+                selectedReport={selectedReport}
+                onSubmit={onSubmit}
+                onHide={() => { setShowAddPerformanceModel(false); setShowEditPerformanceModel(false) }}
+            /> : <></>}
+
+            <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     );
 }

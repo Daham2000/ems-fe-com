@@ -15,6 +15,34 @@ export interface IPerformanceReport {
     updatedAt: Date;
 }
 
+export interface IPerformanceReportUpdate {
+    _id: string;
+    perId: string;
+    empID: string;
+    month: string;
+    year: number;
+    qualityOfWork: number;
+    speedRate: number;
+    trustRate: number;
+    givenTargets: number;
+    achivedTargets: number;
+    description: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface PerformanceReport {
+    empID: string;
+    month: string;
+    year: number;
+    qualityOfWork: number;
+    speedRate: number;
+    trustRate: number;
+    givenTargets: number;
+    achivedTargets: number;
+    description: string;
+}
+
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {

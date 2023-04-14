@@ -2,7 +2,7 @@ import { Spinner } from "react-bootstrap";
 
 const ButtonComponent = (props: any) => {
     return <div>
-        <button onClick={props.onClick} className="topic-font button-color color-white button-blue-dark"
+        <div onClick={props.onClick} className="topic-font button-color color-white button-blue-dark"
             style={{ width: props.width ? props.width : 'auto', height: '25px', fontSize: '12px', paddingRight: '30px', paddingLeft: '28px', padding: '3px', borderRadius: '3px' }}>
             {props.isLoading ? <Spinner
                 as="span"
@@ -11,7 +11,7 @@ const ButtonComponent = (props: any) => {
                 role="status"
                 aria-hidden="true"
             /> : " " + props.text + " "}  
-        </button>
+        </div>
     </div>
 };
 
