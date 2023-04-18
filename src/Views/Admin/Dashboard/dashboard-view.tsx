@@ -33,7 +33,7 @@ const DashboardView = (props: any) => {
             const token = props.idToken;
             if (!props.user.admin) {
                 const res = await getMyDetailsService(token);
-                if (res !== 401) {
+                if (res._id !== "") {
                     setMyDetails(res);
                     props.saveMyDetails(res);
                     if (typeof (res) == "object") {
