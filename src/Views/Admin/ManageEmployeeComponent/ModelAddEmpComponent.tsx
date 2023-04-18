@@ -3,11 +3,43 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import DatePicker from "react-datepicker";
 import { Form } from "react-bootstrap";
+import { Constants } from "../../../Util/constant";
+import { Employee } from "../../../db/Model/Employee";
+import { addEmployeeService } from "../../../Business/Employee/AddEmployeeService";
 
 function AddEmployeeModel(props: any) {
     const today = new Date();
     const [joinedDate, setJoinedDate] = useState(new Date());
     const [birthDay, setBirthDay] = useState(new Date());
+    const [fullName, setFullName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [nic, setNic] = useState("");
+    const [jobTitle, setJobTitle] = useState("");
+    const [contactNum, setContactNum] = useState<number>(0);
+    const [userRole, setUserRole] = useState("");
+    const [image, setImage] = useState("");
+
+    const saveEmployee = async () => {
+        let employee: Employee = {
+            name: fullName,
+            passwordHash: password,
+            userName: userName,
+            address: address,
+            nic: nic,
+            userRole: userRole,
+            joinedDate: joinedDate.toString(),
+            isAvailable: true,
+            jobTitle: jobTitle,
+            birthDay: birthDay.toString(),
+            contactNum: contactNum,
+            email: email,
+            image: image
+        };
+        props.onSave(employee);
+    }
 
     return (
         <Modal
@@ -25,7 +57,9 @@ function AddEmployeeModel(props: any) {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Full name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Full name" />
+                        <Form.Control type="text" placeholder="Enter Full name" onChange={(event) => {
+                            setFullName(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -33,7 +67,9 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicUserName">
                         <Form.Label>User name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter User name" />
+                        <Form.Control type="text" placeholder="Enter User name" onChange={(event) => {
+                            setUserName(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -41,7 +77,9 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicAddress">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Address" />
+                        <Form.Control type="text" placeholder="Enter Address" onChange={(event) => {
+                            setAddress(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -49,7 +87,9 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" placeholder="Enter email" onChange={(event) => {
+                            setEmail(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
@@ -57,12 +97,16 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control type="password" placeholder="Password" onChange={(event) => {
+                            setPassword(event.target.value);
+                        }} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicNic">
                         <Form.Label>NIC</Form.Label>
-                        <Form.Control type="text" placeholder="Enter NIC number" />
+                        <Form.Control type="text" placeholder="Enter NIC number" onChange={(event) => {
+                            setNic(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -70,7 +114,19 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicJobTitle">
                         <Form.Label>Job title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Job Title" />
+                        <Form.Control type="text" placeholder="Enter Job Title" onChange={(event) => {
+                            setJobTitle(event.target.value);
+                        }} />
+                        <Form.Text className="text-muted">
+
+                        </Form.Text>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicNic">
+                        <Form.Label>Image URL</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Image URL" onChange={(event) => {
+                            setImage(event.target.value);
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -78,7 +134,9 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3" controlId="formBasicContactNum">
                         <Form.Label>Contact number</Form.Label>
-                        <Form.Control type="number" placeholder="Enter Contact number" />
+                        <Form.Control type="number" placeholder="Enter Contact number" onChange={(event) => {
+                            setContactNum(Number(event.target.value));
+                        }} />
                         <Form.Text className="text-muted">
 
                         </Form.Text>
@@ -108,7 +166,7 @@ function AddEmployeeModel(props: any) {
                         <Form.Label>Birth Day</Form.Label>
 
                         <DatePicker
-                            selected={joinedDate}
+                            selected={birthDay}
                             onChange={(e) => {
                                 setBirthDay(e ?? new Date());
                             }}
@@ -126,11 +184,14 @@ function AddEmployeeModel(props: any) {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Select User Role</Form.Label>
-                        <Form.Select aria-label="Default select example">
-                            <option>User Role</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <Form.Select value={userRole} onChange={(event) => {
+                            setUserRole(event.target.value);
+                        }} aria-label="Default select example">
+                            {
+                                Constants.UserRoles.map((role) => {
+                                    return <option id={role}>{role}</option>
+                                })
+                            }
                         </Form.Select>
                     </Form.Group>
 
@@ -138,7 +199,7 @@ function AddEmployeeModel(props: any) {
                         <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" onClick={() => { saveEmployee(); }}>
                         Add
                     </Button>
                 </Form>

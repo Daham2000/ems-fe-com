@@ -231,7 +231,14 @@
   margin-right: 5px;
   padding-left: 5px;
   padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
   margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .dialog {
@@ -284,5 +291,12 @@
   font-weight: 300;
   text-align: left;
   color: #565656;
+  padding-top: 5px;
+}
+
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  padding-right: 10px;
   padding-top: 5px;
 }
