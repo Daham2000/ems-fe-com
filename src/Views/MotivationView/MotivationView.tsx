@@ -3,11 +3,13 @@ import { Form } from "react-bootstrap";
 import ButtonComponent from "../Shared/button-component";
 import { connect } from "react-redux";
 import { getMotivationService } from "../../Business/Motivational/getMotivationService";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { IMotivationRequest } from "../../db/Model/MotivationRequest";
 import { getSingleEmpDetailsService } from "../../Business/Employee/GetSingleEmpDetails";
 import { IEmployee } from "../../db/Model/Employee";
+import { postMotivationRequest } from "../../Business/Motivational/postMotivationRequest";
+import { getMyDetailsService } from "../../Business/Employee/GetEmpDetailsService";
 
 const EmployeeRequestCard = (props: any) => {
 
@@ -20,7 +22,7 @@ const EmployeeRequestCard = (props: any) => {
     const loadEmpDetails = async () => {
         const emp = await getSingleEmpDetailsService(props.request.empId, props.isToken);
         console.log(emp);
-        if(emp.address !== "") {
+        if (emp.address !== "") {
             setEmployee(emp);
         }
     }
@@ -50,6 +52,7 @@ const EmployeeRequestCard = (props: any) => {
 const MotivationView = (props: any) => {
 
     const [motivationList, setMotivationList] = useState<IMotivationRequest[]>([]);
+    const [message, setMessage] = useState<string>("");
 
     useEffect(() => {
         loadData();
@@ -64,7 +67,34 @@ const MotivationView = (props: any) => {
         }
     }
 
+    const sendRequets = async () => {
+        try {
+            const emp = await getMyDetailsService(props.idToken);
+            const res = await postMotivationRequest(props.isToken, emp.empID, message);
+            if (res === 201) {
+                toast.success("Request send.");
+            } else {
+                toast.error("Can't send the request");
+            }
+        }
+        catch (e) {
+            toast.error("Can't send the request");
+        }
+    }
+
     return <div className="d-flex flex-column justify-content-start align-item-start">
+        <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+        />
         <DashboardTopBar
             isBirthday={false}
             profileUrl="https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg"
@@ -76,7 +106,7 @@ const MotivationView = (props: any) => {
                 {
                     motivationList.map((m) => {
                         return <>
-                            <EmployeeRequestCard idToken={props.idToken} request={m}/>
+                            <EmployeeRequestCard idToken={props.idToken} request={m} />
                         </>
                     })
                 }
@@ -107,9 +137,12 @@ const MotivationView = (props: any) => {
 
                     <Form.Group className="mt-3 mb-1" controlId="formBasicEmail">
                         <Form.Label style={{ fontSize: "10px" }}>{"Type your problem here..... Let’s Find a solution together"}</Form.Label>
-                        <Form.Control as="textarea" rows={3} cols={4} />
+                        <Form.Control onChange={(event) => {
+                            setMessage(event.target.value);
+                        }} as="textarea" rows={3} cols={4} />
                     </Form.Group>
                     <ButtonComponent text="Send" width={"60px"} onClick={() => {
+                        sendRequets();
                     }} />
                 </div>
                 <img height="340px" width="470px"

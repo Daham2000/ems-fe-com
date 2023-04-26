@@ -6,5 +6,6 @@ export const ApiConstants = {
     AnnouncementAdd: "/announcement-add",
     Holidays: "/holidays",
     Employees: "/employee",
+    Register: "/register",
     Performance: "/performance-report"
 };

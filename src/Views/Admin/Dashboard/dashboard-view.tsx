@@ -15,6 +15,7 @@ import { IAnnouncement } from "../../../db/Model/Announcement";
 import { capitalizeFirstLetter, findTheDateGap, getDashboardDateTime } from "../../../Util/UtilityService";
 import { getCompanyHolidayList } from "../../../Business/Holiday/GetHolidayService";
 import { IHoliday } from "../../../db/Model/Holiday";
+import { useNavigate } from "react-router";
 
 const DashboardView = (props: any) => {
 
@@ -23,6 +24,7 @@ const DashboardView = (props: any) => {
     const [annoucementList, setAnnoucementList] = useState<IAnnouncement[]>([]);
     const [holidayList, setHolidayList] = useState<IHoliday[]>([]);
     const [myDetails, setMyDetails] = useState<IEmployee | number>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadMyDetails();
@@ -33,7 +35,7 @@ const DashboardView = (props: any) => {
             const token = props.idToken;
             if (!props.user.admin) {
                 const res = await getMyDetailsService(token);
-                if (res !== 401) {
+                if (res._id !== "") {
                     setMyDetails(res);
                     props.saveMyDetails(res);
                     if (typeof (res) == "object") {
@@ -92,7 +94,7 @@ const DashboardView = (props: any) => {
 
                 <div className="d-flex d-flex-row justify-content-end">
                     <WhiteButtonComponent text="See all Announcements" onClick={() => {
-
+                        navigate("/dashboard-admin/announcements");
                     }} />
                 </div>
             </div>
