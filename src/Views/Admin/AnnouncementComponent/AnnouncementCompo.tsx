@@ -15,7 +15,9 @@ import { ToastContainer, toast } from "react-toastify";
 const AnnouncementCompo = (props: any) => {
     const [showDialog, setShowDialog] = useState(false);
     const [annuncements, setAnnuncement] = useState<IAnnouncement[]>([]);
-
+    const [annuncementsSearch, setAnnuncementSearch] = useState<IAnnouncement[]>([]);
+    const [searchValue, setSearchValue] = useState("");
+    
     useEffect(() => {
         loadData();
     }, []);
@@ -74,9 +76,22 @@ const AnnouncementCompo = (props: any) => {
                 type="text"
                 style={{ height: '30px', marginRight: "4px" }}
                 id="search"
+                value={searchValue}
+                onChange={(e) => {
+                    setSearchValue(e.target.value)
+                }}
                 aria-describedby="passwordHelpBlock"
             />
-            <button onClick={() => { }} className="topic-font bg-color-white"
+            <button onClick={() => { 
+                if (searchValue !== "") {
+                    const ee = annuncements.filter((ann) => ann.announcementTitle.includes(searchValue))
+                    console.log("ee: ", ee);
+                    setAnnuncementSearch(ee)
+                } else {
+                    loadData();
+                    setAnnuncementSearch([])
+                }
+            }} className="topic-font bg-color-white"
                 style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
             {props.user.admin ? <ButtonComponent width={"138px"} text="Create Announcement" onClick={() => {
                 setShowDialog(true);
@@ -85,8 +100,10 @@ const AnnouncementCompo = (props: any) => {
 
         <div className="d-flex flex-column justify-content-start align-item-start">
             <div style={{ height: "10px" }} />
-            {
+            { annuncementsSearch.length == 0 ? 
                 annuncements.map((ann) => {
+                    return (<AnnoucementCard annuncements={ann} />);
+                }) : annuncementsSearch.map((ann) => {
                     return (<AnnoucementCard annuncements={ann} />);
                 })
             }
