@@ -80,7 +80,7 @@ const DashboardView = (props: any) => {
                     <WrapTextComponent text={annoucementList.length + " Unread Announcements"} icon={DotIcon} />
                 </div>
 
-                <div className="d-flex d-flex-row justify-content-between">
+                <div className="d-flex d-flex-row justify-content-between" style={{marginTop: "7px"}}>
                     {
                         annoucementList.length > 0 ?
                             <div className="box-white-bold">{capitalizeFirstLetter(annoucementList[0].announcementTitle)}</div>
@@ -89,7 +89,7 @@ const DashboardView = (props: any) => {
                 </div>
 
                 <p className="box-white-normal" style={{ marginBottom: "1px" }}>{
-                    capitalizeFirstLetter(annoucementList[0].message)
+                    annoucementList.length > 0 ? capitalizeFirstLetter(annoucementList[0].message) : ""
                 }</p>
 
                 <div className="d-flex d-flex-row justify-content-end">

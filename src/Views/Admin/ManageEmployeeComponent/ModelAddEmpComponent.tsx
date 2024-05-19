@@ -8,7 +8,8 @@ import { Employee } from "../../../db/Model/Employee";
 import { addEmployeeService } from "../../../Business/Employee/AddEmployeeService";
 
 function AddEmployeeModel(props: any) {
-    const today = new Date();
+    const today = new Date("2015-01-01");
+    const firstDate = new Date("1950-01-01");
     const [joinedDate, setJoinedDate] = useState(new Date());
     const [birthDay, setBirthDay] = useState(new Date());
     const [fullName, setFullName] = useState("");
@@ -171,7 +172,7 @@ function AddEmployeeModel(props: any) {
                                 setBirthDay(e ?? new Date());
                             }}
                             className="form-control"
-                            minDate={today}
+                            minDate={firstDate}
                             customInput={
                                 <input
                                     type="text"

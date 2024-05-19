@@ -64,9 +64,30 @@ const MyProfileView = (props: any) => {
         Legend
     );
 
+    function sortListByMonth(list: IPerformanceReport[]): IPerformanceReport[] {
+        const monthOrder: { [month: string]: number } = {
+          January: 1,
+          February: 2,
+          March: 3,
+          April: 4,
+          May: 5,
+          June: 6,
+          July: 7,
+          August: 8,
+          September: 9,
+          October: 10,
+          November: 11,
+          December: 12,
+        };
+      
+        return list.sort((a, b) => monthOrder[a.month] - monthOrder[b.month]);
+      }
+
     const getData = async () => {
         const list = await getPerformanceReportService(props.idToken, user.empID);
-        setLabels(list.map((obj) => {
+        const sortedList = sortListByMonth(list);
+
+        setLabels(sortedList.map((obj) => {
             return obj.month;
         }));
         setData({
@@ -75,7 +96,7 @@ const MyProfileView = (props: any) => {
                 {
                     fill: true,
                     label: 'Dataset 1',
-                    data: list.reverse().map((obj) => {
+                    data: sortedList.map((obj) => {
                         return obj.overviewRate
                     }),
                     borderColor: 'rgb(53, 162, 235)',
@@ -83,7 +104,7 @@ const MyProfileView = (props: any) => {
                 }
             ],
         });
-        setPerformanceReport(list);
+        setPerformanceReport(sortedList);
     }
 
     const findEmpTitle = (role: string) => {

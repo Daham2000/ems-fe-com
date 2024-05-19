@@ -130,14 +130,14 @@ function AddPerformanceModel(props: any) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Overview Feedback</Form.Label>
+                        <Form.Label>Overall Feedback</Form.Label>
                         <Form.Control onChange={(event) => {
                             setdescription(event.target.value);
                         }} defaultValue={props.isEdit ? props.selectedReport.description : ""} className="w-80" type="text" placeholder="Type here" height={"400px"} />
                     </Form.Group>
 
                     {props.isEdit ? <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Overview Rate</Form.Label>
+                        <Form.Label>Overall Rate</Form.Label>
                         <Form.Control disabled defaultValue={props.isEdit ? props.selectedReport.overviewRate.toFixed(2) : ""} className="w-80" type="text" placeholder="Type here" height={"400px"} />
                     </Form.Group> : <></>}
 
