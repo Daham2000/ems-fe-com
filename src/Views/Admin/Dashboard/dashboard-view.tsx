@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import BoxImportantIcon from "../../../assets/box-important.svg";
 import DotIcon from "../../../assets/dot-icon.svg";
 import DotIconRed from "../../../assets/dot-red.svg";
-import { WhiteButtonComponent } from "../../Shared/button-component";
+import ButtonComponent, { WhiteButtonComponent } from "../../Shared/button-component";
 import DashboardTopBar from "../../Shared/dashboard-top-bar";
 import HolidayCard from "../../Shared/holiday-card";
 import WrapTextComponent from "../../Shared/wrap-text-component";
@@ -16,11 +16,13 @@ import { capitalizeFirstLetter, findTheDateGap, getDashboardDateTime } from "../
 import { getCompanyHolidayList } from "../../../Business/Holiday/GetHolidayService";
 import { IHoliday } from "../../../db/Model/Holiday";
 import { useNavigate } from "react-router";
+import AddHolidayModel from "./AddHolidayModel";
 
 const DashboardView = (props: any) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [isBirthday, setIsBirthday] = useState(false);
+    const [isAddHolidayModel, setIsAddHolidayModel] = useState(false);
     const [annoucementList, setAnnoucementList] = useState<IAnnouncement[]>([]);
     const [holidayList, setHolidayList] = useState<IHoliday[]>([]);
     const [myDetails, setMyDetails] = useState<IEmployee | number>();
@@ -80,7 +82,7 @@ const DashboardView = (props: any) => {
                     <WrapTextComponent text={annoucementList.length + " Unread Announcements"} icon={DotIcon} />
                 </div>
 
-                <div className="d-flex d-flex-row justify-content-between" style={{marginTop: "7px"}}>
+                <div className="d-flex d-flex-row justify-content-between" style={{ marginTop: "7px" }}>
                     {
                         annoucementList.length > 0 ?
                             <div className="box-white-bold">{capitalizeFirstLetter(annoucementList[0].announcementTitle)}</div>
@@ -103,7 +105,7 @@ const DashboardView = (props: any) => {
                 width: "500px",
                 marginTop: "10px",
                 padding: "15px",
-                borderRadius: "10px", height: "250px"
+                borderRadius: "10px",
             }}>
                 <div style={{ height: "20px", fontWeight: "bold", fontSize: "13px" }}>
                     <img src={DotIconRed} height={"10px"} style={{ color: "Red", marginRight: "10px" }} />
@@ -115,12 +117,22 @@ const DashboardView = (props: any) => {
                             return <HolidayCard color={"#4E84C1"}
                                 date={getDashboardDateTime(holiday.eventDate.toString())}
                                 holiday={holiday.holidayTitle}
-                                remaining={findTheDateGap(new Date(), holiday.eventDate) + " days more"} />;
+                                remaining={findTheDateGap(new Date(), holiday.eventDate)+1 + " days more"} />;
                         })
                     }
+                    { props.user.admin && <div>
+                        <ButtonComponent width={"138px"} text="Add a Holiday" onClick={() => {
+                            setIsAddHolidayModel(true);
+                        }} />
+                    </div>}
                 </div>
             </div>
         </>}
+        {
+            isAddHolidayModel &&  <AddHolidayModel show={isAddHolidayModel} onClose={()=> {
+                setIsAddHolidayModel(false)
+            }} />
+        }
     </>
 }
 

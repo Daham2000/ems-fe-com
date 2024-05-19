@@ -8,13 +8,13 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface IHoliday {
-    _id: string;
-    holiId: string;
+    _id?: string;
+    holiId?: string;
     holidayTitle: string;
     eventDate: Date;
-    orgId: string;
-    createdAt: Date;
-    updatedAt: Date;
+    orgId?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 // Converts JSON strings to/from your types
