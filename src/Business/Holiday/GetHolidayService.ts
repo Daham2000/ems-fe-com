@@ -14,3 +14,17 @@ export const getCompanyHolidayList = async (idToken: string): Promise<IHoliday[]
         return list;
     }
 }
+
+export const addHolidayService = async (idToken: string, ann: IHoliday): Promise<number> => {
+    const instance = await getAxios(idToken);
+    const jsonBody = JSON.stringify(ann);
+    let obj = JSON.parse(jsonBody);
+    
+    try {
+        const res = await instance.post(ApiConstants.Holidays, obj);
+        return 201;
+    } catch (e) {
+        console.log(e);
+        return 400;
+    }
+}

@@ -35,6 +35,10 @@ export function capitalizeFirstLetter(string: string) {
 
 export const findTheDateGap = (first: Date, sec:Date) => {
     const start = moment(first);
+    console.log(start);
+    
     const end = moment(sec);
+    console.log(end);
+
     return end.diff(start, 'days');
 };
