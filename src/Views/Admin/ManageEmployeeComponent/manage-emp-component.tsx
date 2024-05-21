@@ -32,11 +32,13 @@ export const options = {
 
 const ManageEmployeeComponent = (props: any) => {
     const [showDialog, setShowDialog] = useState(false);
+    const [valueSearch, setValueSearch] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [showAddPerformanceModel, setShowAddPerformanceModel] = useState(false);
     const [showEditPerformanceModel, setShowEditPerformanceModel] = useState(false);
     const [openedEmployee, setOpenedEmployee] = useState(false);
     const [employeeList, setEmployeeList] = useState<IEmployee[]>([]);
+    const [employeeSearchList, setEmployeeSearchList] = useState<IEmployee[]>([]);
     const [selectedEmployee, setSelectedEmployee] = useState<IEmployee>();
     const [performanceReport, setPerformanceReport] = useState<IPerformanceReport[]>([]);
     const [labels, setLabels] = useState<string[]>(["Jan"]);
@@ -75,8 +77,17 @@ const ManageEmployeeComponent = (props: any) => {
         }
     }
 
-
-
+    const searchEmployee = (value: string) => {
+        if (value !== "") {
+            const tt = employeeList.filter((e) => e.name.includes(value))
+            console.log(tt);
+            setValueSearch(value)
+            setEmployeeSearchList(tt)
+        } else {
+            setValueSearch("")
+            setEmployeeSearchList([])
+        }
+    }
 
     return <div className="d-flex flex-column justify-content-start align-item-start">
         <DashboardTopBar
@@ -86,25 +97,26 @@ const ManageEmployeeComponent = (props: any) => {
         <div className="sub-topic-font " style={{ marginTop: "15px" }}>{!openedEmployee ? "Manage Employees" : selectedEmployee?.name + "'s Profile page"}</div>
         {
             !openedEmployee ? <>
-                <div className="d-flex flex-row justify-content-start align-item-start" style={{ marginTop: "10px" }}>
+                <div className="d-flex flex-row justify-content-center align-item-center" style={{ marginTop: "10px" }}>
                     <Form.Control
                         type="text"
                         style={{ height: '30px', marginRight: "4px" }}
                         id="search"
-                        onChange={() => {
-
+                        value={valueSearch}
+                        onChange={(v) => {
+                            searchEmployee(v.target.value)
                         }}
                         aria-describedby="passwordHelpBlock"
                     />
-                    <button onClick={() => { }} className="topic-font bg-color-white"
+                    <button onClick={() => { searchEmployee(valueSearch) }} className="topic-font bg-color-white"
                         style={{ width: '95px', marginRight: "10px", border: "none", height: '30px', fontSize: '12px', paddingRight: '25px', paddingLeft: '26px', padding: '3px', borderRadius: '3px' }}>{"Search"}</button>
-                    <ButtonComponent text="Add Employee" onClick={() => {
+                    <ButtonComponent text="Add" width="60px" onClick={() => {
                         setShowDialog(true);
                     }} />
                 </div>
                 <div className="d-flex flex-column" style={{ marginTop: "10px" }}>
                     {
-                        employeeList.map((obj) => {
+                        employeeSearchList.length > 0 ? employeeSearchList.map((obj) => {
                             return <EmployeeCard key={obj._id} emp={obj} onClick={async () => {
                                 setIsLoading(true);
                                 setSelectedEmployee(obj);
@@ -130,10 +142,37 @@ const ManageEmployeeComponent = (props: any) => {
                                 setPerformanceReport(list);
                                 setIsLoading(false);
                             }} />;
-                        })
+                        }) :
+                            employeeList.map((obj) => {
+                                return <EmployeeCard key={obj._id} emp={obj} onClick={async () => {
+                                    setIsLoading(true);
+                                    setSelectedEmployee(obj);
+                                    setOpenedEmployee(true);
+                                    const list = await getPerformanceReportService(props.idToken, obj.empID);
+                                    setLabels(list.map((obj) => {
+                                        return obj.month;
+                                    }));
+                                    setData({
+                                        labels,
+                                        datasets: [
+                                            {
+                                                fill: true,
+                                                label: 'Dataset 1',
+                                                data: list.map((obj) => {
+                                                    return obj.overviewRate
+                                                }),
+                                                borderColor: 'rgb(53, 162, 235)',
+                                                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                                            }
+                                        ],
+                                    });
+                                    setPerformanceReport(list);
+                                    setIsLoading(false);
+                                }} />;
+                            })
                     }
                 </div>
-            </> : <SingleEmplyeeView emp={selectedEmployee}/>
+            </> : <SingleEmplyeeView emp={selectedEmployee} />
         }
 
         <AddEmployeeModel

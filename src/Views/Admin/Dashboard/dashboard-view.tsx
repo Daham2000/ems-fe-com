@@ -76,7 +76,7 @@ const DashboardView = (props: any) => {
             <div className="d-flex d-flex-column button-color" style={{
                 padding: "20px",
                 marginTop: "15px",
-                width: "84vw", height: "140px", borderRadius: "6px"
+                width: "84vw", height: "160px", borderRadius: "6px"
             }}>
                 <div className="d-flex d-flex-row">
                     <WrapTextComponent text={annoucementList.length + " Unread Announcements"} icon={DotIcon} />

@@ -9,7 +9,7 @@ class AxiosSingleton {
     public static async getInstance(idToken: string): Promise<AxiosInstance> {
         if (!AxiosSingleton.instance) {
             AxiosSingleton.instance = axios.create({
-                baseURL: 'https://ems-be-com-vle43tpqga-de.a.run.app',
+                baseURL: 'http://localhost:8080',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${idToken}`,

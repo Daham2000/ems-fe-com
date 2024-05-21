@@ -71,7 +71,7 @@ const AnnouncementCompo = (props: any) => {
             wish={1} />
         <div className="sub-topic-font " style={{ marginTop: "15px" }}>{"Announcement"}</div>
 
-        <div className="d-flex flex-row justify-content-start align-item-start" style={{ marginTop: "10px" }}>
+        <div className="d-flex flex-row justify-content-center align-item-center" style={{ marginTop: "10px" }}>
             <Form.Control
                 type="text"
                 style={{ height: '30px', marginRight: "4px" }}
